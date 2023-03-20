@@ -31,4 +31,4 @@ jobs:
           path: staging
           
       - name: Show logs
-        run: cat stagning/hippodrome.log
+        run: cat staging/hippodrome.log
