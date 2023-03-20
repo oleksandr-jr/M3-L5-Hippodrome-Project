@@ -23,9 +23,12 @@ jobs:
 
       - name: copy logs
         run: mkdir staging && cp -R logs/ staging
-
+    
       - name: Get logs
         uses: actions/upload-artifact@v3
         with:
           name: Package
           path: staging
+          
+      - name: Show logs
+        run: cat stagning/hippodrome.log
