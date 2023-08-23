@@ -51,23 +51,6 @@ jobs:
           test_result_pattern: "target/surefire-reports/*.xml"
           test_coverage_pattern: "target/site/jacoco/jacoco.xml"
 
-      - name: Show structure
-        run: ls -R
-
       - name: Show logs
-        run: cd logs && cat . *
+        run: cd logs && grep . *
         if: always()
-        with:
-          name: Logs
-
-      - name: copy logs
-        run: mkdir staging && cp -R logs/ staging/
-
-      - name: Get logs
-        uses: actions/upload-artifact@v3
-        with:
-          name: Package
-          path: staging
-
-      - name: Show copied logs
-        run: grep staging/ *
