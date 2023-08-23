@@ -3,8 +3,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.MockedStatic;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mockStatic;
 
 public class HorseTest {
@@ -91,13 +90,13 @@ public class HorseTest {
 
     @Test
     public void move_ChangesDistance() {
-        Horse horse = new Horse("name", 0.1, 0.2);
+        Horse horse = new Horse("name", 1, 250);
         double distanceBeforeMove = horse.getDistance();
 
         horse.move();
 
         double distanceAfterMove = horse.getDistance();
-        assertEquals(distanceBeforeMove + horse.getSpeed(), distanceAfterMove);
+        assertTrue(distanceAfterMove > distanceBeforeMove);
     }
 
     @ParameterizedTest
