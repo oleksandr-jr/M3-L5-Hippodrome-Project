@@ -55,7 +55,9 @@ jobs:
         run: ls -R
 
       - name: Show logs
-        run: grep logs/ *
+        run: cd logs && cat . *
+        with:
+          name: Logs
 
       - name: copy logs
         run: mkdir staging && cp -R logs/ staging/
