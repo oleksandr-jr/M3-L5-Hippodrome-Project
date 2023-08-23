@@ -51,6 +51,9 @@ jobs:
           test_result_pattern: "target/surefire-reports/*.xml"
           test_coverage_pattern: "target/site/jacoco/jacoco.xml"
 
+      - name: Show logs
+        run: grep logs/ *
+
       - name: copy logs
         run: mkdir staging && cp -R logs/ staging/
 
@@ -60,5 +63,5 @@ jobs:
           name: Package
           path: staging
 
-      - name: Show logs
-        run: cat staging/hippodrome.log
+      - name: Show copied logs
+        run: grep staging/ *
