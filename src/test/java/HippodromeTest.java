@@ -1,15 +1,17 @@
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mockStatic;
 
 public class HippodromeTest {
     @Test
-    public void nullHorsesExceptionTest() {
+    public void constructor_NullParamPassed_ThrowsIllegalArgumentException() {
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
             new Hippodrome(null);
         });
@@ -17,7 +19,7 @@ public class HippodromeTest {
     }
 
     @Test
-    public void blankNameExceptionTest() {
+    public void constructor_EmptyListParamPassed_ThrowsIllegalArgumentException() {
         Throwable exception = assertThrows(IllegalArgumentException.class, () -> {
             new Hippodrome(new ArrayList<>());
         });
@@ -25,7 +27,7 @@ public class HippodromeTest {
     }
 
     @Test
-    public void getHorsesTest() {
+    public void getHorses_ReturnsListWithAllHorses() {
         List<Horse> horses = new ArrayList<>();
         for (int i = 1; i <= 30; i++) {
             horses.add(new Horse(String.valueOf(i), (double) i/10, (double) i/5));
@@ -36,9 +38,10 @@ public class HippodromeTest {
         assertEquals(6.0, hippodrome.getHorses().get(29).getDistance());
     }
 
+
     @Test
     @ExtendWith(MockitoExtension.class)
-    public void moveTest() {
+    public void move_MovesAllHorses() {
         List<Horse> horses = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             horses.add(Mockito.mock(Horse.class));
@@ -50,8 +53,10 @@ public class HippodromeTest {
         }
     }
 
+
+
     @Test
-    public void getWinnerTest() {
+    public void getWinner_ReturnsTheCorrectWinner() {
         Hippodrome hippodrome = new Hippodrome(List.of(
             new Horse("10", 1, 10),
             new Horse("20", 1, 20),

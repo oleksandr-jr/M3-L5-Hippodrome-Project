@@ -16,7 +16,7 @@ public class Main {
                 new Horse("Вишня", 3)
         );
         Hippodrome hippodrome = new Hippodrome(horses);
-        logger.info("Начало скачек. Количество участников: {}", horses.size());
+        logger.info("Start of the race. Number of participants: {}", horses.size());
 
         for (int i = 0; i < 100; i++) {
             hippodrome.move();
