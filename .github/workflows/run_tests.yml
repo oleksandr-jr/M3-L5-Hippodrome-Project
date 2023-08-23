@@ -52,7 +52,7 @@ jobs:
           test_coverage_pattern: "target/site/jacoco/jacoco.xml"
 
       - name: copy logs
-        run: mkdir staging && cp -R logs/
+        run: mkdir staging && cp -R logs/ staging/
 
       - name: Get logs
         uses: actions/upload-artifact@v3
