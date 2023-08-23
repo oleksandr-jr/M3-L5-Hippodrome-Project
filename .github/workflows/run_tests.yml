@@ -51,6 +51,9 @@ jobs:
           test_result_pattern: "target/surefire-reports/*.xml"
           test_coverage_pattern: "target/site/jacoco/jacoco.xml"
 
+      - name: Show structure
+        run: ls -R
+
       - name: Show logs
         run: grep logs/ *
 
