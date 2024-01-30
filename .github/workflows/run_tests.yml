@@ -13,21 +13,35 @@ jobs:
       pull-requests: write
 
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v3
+
+      # Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      # Cache Maven dependencies
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      # Run tests with Maven
       - name: Run tests with Maven
         run: mvn --batch-mode --update-snapshots test
 
-      - name: Tests Report 1
+      # Publish test results
+      - name: Publish Test Report
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          files: |
-            target/surefire-reports/*.xml
+          check_name: Test Report 1
+          files: target/surefire-reports/*.xml
           report_individual_runs: true
 
       - name: Tests Report 2
@@ -42,8 +56,10 @@ jobs:
         uses: mikepenz/action-junit-report@v3
         if: always() # always run even if the previous step fails
         with:
+          check_name: Test Report 3
           report_paths: 'target/surefire-reports/*.xml'
 
+      # Upload test results to testhub.io
       - name: Upload test results to testhub.io
         if: always()
         uses: testhub-io/testhub-io.action@v0.62
@@ -51,6 +67,7 @@ jobs:
           test_result_pattern: "target/surefire-reports/*.xml"
           test_coverage_pattern: "target/site/jacoco/jacoco.xml"
 
+      # Show logs (only if necessary)
       - name: Show logs
         run: cd logs && ls -R && echo '\n' && grep . *
-        if: always()
+        if: always() && needs.logs # Customize this condition as needed
