@@ -35,22 +35,22 @@ jobs:
       - name: Run tests with Maven
         run: mvn --batch-mode --update-snapshots test
 
-      # Publish test results
-      - name: Publish Test Report
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          check_name: Test Report 1
-          files: target/surefire-reports/*.xml
-          report_individual_runs: true
-
-      - name: Tests Report 2
+      - name: Tests Report 1
         uses: dorny/test-reporter@v1
         if: always()    # run this step even if previous step failed
         with:
-          name: Tests Report 2           # Name of the check run which will be created
+          name: Tests Report 1           # Name of the check run which will be created
           path: target/surefire-reports/*.xml    # Path to test results
           reporter: java-junit        # Format of test results
+
+      # Publish test results
+      - name: Tests Report 2
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          check_name: Test Report 2
+          files: target/surefire-reports/*.xml
+          report_individual_runs: true
 
       - name: Test Report 3
         uses: mikepenz/action-junit-report@v3
