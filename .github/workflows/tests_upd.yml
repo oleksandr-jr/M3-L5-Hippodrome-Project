@@ -43,6 +43,27 @@ jobs:
           files: target/surefire-reports/*.xml
           report_individual_runs: true
 
+      - name: Tests Report 2
+        uses: dorny/test-reporter@v1
+        if: always()    # run this step even if previous step failed
+        with:
+          name: Tests Report 2           # Name of the check run which will be created
+          path: target/surefire-reports/*.xml    # Path to test results
+          reporter: java-junit        # Format of test results
+
+      - name: Test Report 3
+        uses: mikepenz/action-junit-report@v3
+        if: always() # always run even if the previous step fails
+        with:
+          report_paths: 'target/surefire-reports/*.xml'
+
+      - name: Test Report 4
+        if: success() || failure()
+        uses: scacap/action-surefire-report@v1
+        with:
+          report_path: target/surefire-reports/*.xml
+          check_name: Test Report 4
+
       # Upload test results to testhub.io
       - name: Upload test results to testhub.io
         if: always()
